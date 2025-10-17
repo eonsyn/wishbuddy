@@ -203,7 +203,7 @@ const formattedWishParts = (response || "")
             ) : (
               <div className="bg-white/90 border border-orange-200 rounded-2xl p-6 shadow-lg w-full max-w-2xl relative mx-auto">
                 <h2 className="text-2xl font-bold text-orange-700 mb-4 text-center">
-                  Your Sarcastic Wish 😜
+                  Sarcastic Wish 😜
                 </h2>
                 <p className="text-gray-700 italic mb-6 text-center">
                   {formattedWishParts} <br />
@@ -214,7 +214,7 @@ const formattedWishParts = (response || "")
 
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                   <button
-                    className="flex items-center gap-2 px-4 py-2 bg-orange-200 rounded-lg hover:bg-orange-300 transition shadow-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-orange-600  cursor-pointer rounded-lg hover:bg-orange-700 text-white transition shadow-sm"
                     onClick={handleCopy}
                   >
                     <Copy size={18} />

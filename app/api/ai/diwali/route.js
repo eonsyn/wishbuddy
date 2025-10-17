@@ -42,9 +42,7 @@ Keep the wish under 3 sentences, punchy, witty, unforgettable. Mention Desi Diwa
       name,
       info,
       generatedWish: wishText,
-    }); 
-    console.log(wishDoc)
-    console.log(wisher)
+    });  
     return Response.json({ success: true, message: wishText, data: wishDoc });
   } catch (err) {
     console.error("❌ Error generating wish:", err);
