@@ -187,7 +187,7 @@ const formattedWishParts = (response || "")
           </div>
 
           {/* Result Card */}
-          <div className="w-full flex justify-center px-4 flex-shrink-0">
+          <div className="w-full  flex justify-center md:px-4 flex-shrink-0">
             {loading || !response ? (
               // Skeleton Loader
               <div className="bg-white/80 border border-orange-200 rounded-2xl p-6 shadow-lg animate-pulse w-full max-w-2xl">
@@ -201,7 +201,7 @@ const formattedWishParts = (response || "")
                 </div>
               </div>
             ) : (
-              <div className="bg-white/90 border border-orange-200 rounded-2xl p-6 shadow-lg w-full max-w-2xl relative mx-auto">
+              <div className="bg-white/90 border border-orange-200 rounded-2xl p-6 shadow-lg w-full md:max-w-2xl relative mx-auto">
                 <h2 className="text-2xl font-bold text-orange-700 mb-4 text-center">
                   Sarcastic Wish 😜
                 </h2>
