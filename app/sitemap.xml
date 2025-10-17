@@ -1,22 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset 
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
-  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
->
-  <url>
-    <loc>https://wishbuddy.netlify.app/</loc>
-    <lastmod>2025-10-08T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+// app/sitemap.js
 
-    
-  <url>
-    <loc>https://wishbuddy.netlify.app/diwali</loc>
-    <lastmod>2025-10-08T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-</urlset>
+export const dynamic = 'force-dynamic'; // ⬅️ Add this line
+
+import { connectDB } from "@/lib/mongodb";
+import Article from '@/models/Article';
+
+export default async function sitemap() {
+  await connectDB();
+
+  const articles = await Article.find({ isPublished: true }).select('slug');
+
+  const baseUrl = 'https://wishbuddy.netlify.app';
+
+  const staticRoutes = [
+    {
+      url: `${baseUrl}/`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 1,
+    }, 
+  ];
+
+  const blogRoutes = articles.map((article) => ({
+    url: `${baseUrl}/blog/${article.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.5,
+  }));
+
+  return [...staticRoutes, ...blogRoutes];
+}

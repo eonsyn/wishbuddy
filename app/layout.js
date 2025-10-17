@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import Script from "next/script";
-
+import Navbar from "@/components/Navbar";
 export const metadata = {
   title: "WishBuddy - Create Personalized Wishes for Birthdays, Festivals & More",
   description: "WishBuddy lets you create and share unique, personalized wishes for birthdays, Diwali, anniversaries, festivals, and special occasions. Celebrate every moment with heartfelt messages and greetings online.",
@@ -69,6 +69,7 @@ export default function RootLayout({ children }) {
             duration: 4000,
           }}
         />
+        <Navbar/>
         {children}
         <Footer/>
    
