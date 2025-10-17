@@ -173,7 +173,7 @@ export default function LightDeepak() {
                 transition={{ duration: 0.2 }}
                 className="text-center text-yellow-300 mt-2 text-sm font-medium animate-pulse"
               >
-                Drag this flame to light the Diya
+                Drag this flame 
               </motion.p>
             </motion.div>
           )}

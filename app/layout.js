@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import Script from "next/script";
-import SocialBar from "@/components/ads/adsterra/SocialBar";
 
 export const metadata = {
   title: "WishBuddy - Create Personalized Wishes for Birthdays, Festivals & More",
@@ -72,7 +71,7 @@ export default function RootLayout({ children }) {
         />
         {children}
         <Footer/>
-        <SocialBar/>
+   
       </body>
     </html>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import LightDeepak from "@/components/diwali/LightDeepak";
-
+import MediumRectangle from "@/components/ads/adsterra/MediumRectangle";
 export const revalidate = 60; // Revalidate every 60s
 export const dynamic = "force-dynamic"; // Prevent build-time fetch failures
 
@@ -191,6 +191,9 @@ export default async function Page({ params }) {
           🪔 Create a wish for your friend
         </Link>
       </div>
+     
+            <MediumRectangle/>
+             
     </div>
   );
 }
