@@ -1,57 +1,93 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import LightDeepak from "@/components/diwali/LightDeepak";
 
-export const revalidate = 60; // ISR every 60s
+export const revalidate = 60; // Revalidate every 60s
+export const dynamic = "force-dynamic"; // Prevent build-time fetch failures
 
-// 🪔 Pre-generate all Diwali wish pages
+// 🪔 Pre-generate static paths safely
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ai/diwali`, {
-    next: { revalidate: 60 },
-  });
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      process.env.VERCEL_URL ||
+      "http://localhost:3000";
 
-  const data = await res.json();
-  if (!data.success || !data.data) return [];
+    const res = await fetch(`${baseUrl}/api/ai/diwali`, {
+      next: { revalidate: 60 },
+    });
 
-  return data.data.map((wish) => ({ id: wish._id }));
+    // If the fetch fails or returns non-JSON, just skip
+    if (!res.ok) return [];
+    const data = await res.json();
+
+    if (!data.success || !data.data) return [];
+
+    return data.data.map((wish) => ({ id: wish._id }));
+  } catch (error) {
+    console.error("❌ generateStaticParams error:", error);
+    return [];
+  }
 }
 
-// 🪔 Dynamically generate page metadata
+// 🪔 Dynamic Metadata
 export async function generateMetadata({ params }) {
-  const { id } = params;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/ai/diwali?id=${id}`,
-    { next: { revalidate: 60 } }
-  );
-  const data = await res.json();
+  try {
+    const { id } = params;
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      process.env.VERCEL_URL ||
+      "http://localhost:3000";
 
-  if (!data.success || !data.data) {
+    const res = await fetch(`${baseUrl}/api/ai/diwali?id=${id}`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) return { title: "Diwali Wish Not Found" };
+
+    const data = await res.json();
+    if (!data.success || !data.data)
+      return { title: "Diwali Wish Not Found" };
+
+    const wish = data.data;
+    return {
+      title: `Diwali wish to ${wish.name}`,
+      description: `${wish.wisher} sends warm Diwali greetings to ${wish.name}.`,
+    };
+  } catch (error) {
+    console.error("❌ generateMetadata error:", error);
     return { title: "Diwali Wish Not Found" };
   }
-
-  const wish = data.data;
-  return {
-    title: `Diwali wish to ${wish.name}`,
-    description: `${wish.wisher} sends warm Diwali greetings to ${wish.name}.`,
-  };
 }
 
 // 🪔 Page Component
 export default async function Page({ params }) {
   const { id } = params;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.VERCEL_URL ||
+    "http://localhost:3000";
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/ai/diwali?id=${id}`,
-    { next: { revalidate: 60 } }
-  );
-
-  const data = await res.json();
+  let data;
+  try {
+    const res = await fetch(`${baseUrl}/api/ai/diwali?id=${id}`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch wish data");
+    data = await res.json();
+  } catch (error) {
+    console.error("❌ Wish fetch failed:", error);
+    data = { success: false };
+  }
 
   if (!data.success || !data.data) {
     return (
       <div className="min-h-screen flex items-center justify-center text-center p-6 bg-gradient-to-br from-orange-50 via-yellow-50 to-white">
         <div className="bg-white/80 shadow-lg rounded-2xl p-8 w-full md:max-w-sm">
-          <h1 className="text-2xl font-bold text-red-600 mb-2">Wish not found 😢</h1>
+          <h1 className="text-2xl font-bold text-red-600 mb-2">
+            Wish not found 😢
+          </h1>
           <p className="text-gray-600">
             {data.error || "The wish you’re looking for doesn’t exist."}
           </p>
@@ -68,18 +104,20 @@ export default async function Page({ params }) {
 
   const wish = data.data;
 
-  // Convert **bold** parts into React elements safely
-  const formattedWishParts = wish.generatedWish.split(/(\*.*?\*)/g).map((part, index) => {
-    if (part.startsWith("*") && part.endsWith("*")) {
-      const text = part.slice(1, -1);
-      return (
-        <strong key={index} className="font-semibold text-orange-800">
-          {text}
-        </strong>
-      );
-    }
-    return <span key={index}>{part}</span>;
-  });
+  // Safely render bold sections (*text*)
+  const formattedWishParts = wish.generatedWish
+    .split(/(\*.*?\*)/g)
+    .map((part, index) => {
+      if (part.startsWith("*") && part.endsWith("*")) {
+        const text = part.slice(1, -1);
+        return (
+          <strong key={index} className="font-semibold text-orange-800">
+            {text}
+          </strong>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center md:px-6 py-10 bg-gradient-to-br from-orange-100 via-yellow-50 to-white">
@@ -87,25 +125,36 @@ export default async function Page({ params }) {
       <LightDeepak />
 
       {/* Wish Card */}
-      <div className="relative w-full md:max-w-[80%] md:bg-white/90   md:backdrop-blur-xl md:shadow-2xl rounded-3xl p-10 text-center md:border border-orange-200">
+      <div className="relative w-full md:max-w-[80%] md:bg-white/90 md:backdrop-blur-xl md:shadow-2xl rounded-3xl p-10 text-center md:border border-orange-200">
         {/* Title */}
         <h1 className="text-4xl capitalize font-extrabold text-orange-700 mb-6">
           {wish.name}’s Diwali Wish
-        </h1> 
-        {/* Wisher Info */}
-        <div className='h-52 mb-3 rounded-2xl w-full overflow-hidden'>
-<img className=" scale-105 " src={`/diwali/${wish.type}.png`}></img>
+        </h1>
+
+        {/* Wish Image */}
+        <div className="h-52 mb-3 rounded-2xl w-full overflow-hidden">
+          <Image
+            src={`/diwali/${wish.type}.png`}
+            alt={`${wish.type} Diwali illustration`}
+            width={800}
+            height={400}
+            className="object-cover w-full h-full scale-105"
+            priority
+          />
         </div>
-        
-        
-        {/* Main Wish Message */}
+
+        {/* Message */}
         <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 text-gray-800 font-medium leading-relaxed text-left shadow-inner">
           {formattedWishParts}
         </div>
-        <p className="text-gray-600 italic mb-6 text-lg text-end">By - {wish.wisher}</p>
+
+        {/* Wisher Info */}
+        <p className="text-gray-600 italic mb-6 text-lg text-end">
+          By - {wish.wisher}
+        </p>
       </div>
 
-      {/* Create New Wish Button */}
+      {/* Button */}
       <div className="mt-10 flex justify-center">
         <Link
           href="/diwali"

@@ -7,17 +7,16 @@ import Glitter from "./Glitter";
 export default function LightDeepak() {
   const [isLit, setIsLit] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const constraintsRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
+  const constraintsRef = useRef(null);
+
   const handleDragEnd = (_, info) => {
-    // Check if flame is dropped near diya
     const inLightingZone =
       info.point.y > window.innerHeight / 2 - 150 &&
       info.point.y < window.innerHeight / 2 + 150;
 
     if (inLightingZone) {
       setIsLit(true);
-      // Fade out after a short delay
       setTimeout(() => setFadeOut(true), 2500);
     }
   };
@@ -27,16 +26,16 @@ export default function LightDeepak() {
       {!fadeOut && (
         <motion.div
           ref={constraintsRef}
-          className={`fixed inset-0 flex flex-col items-center justify-center z-50 overflow-hidden transition-colors duration-1000 ${isLit
+          className={`fixed inset-0 flex flex-col items-center justify-center z-50 overflow-hidden transition-colors duration-1000 ${
+            isLit
               ? "bg-gradient-to-br from-yellow-100 via-orange-200 to-white"
               : "bg-black"
-            }`}
+          }`}
           initial={{ opacity: 1 }}
           animate={{ opacity: fadeOut ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          {/* Soft glowing background when lit */}
           {isLit && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -47,10 +46,10 @@ export default function LightDeepak() {
 
           <Glitter />
 
-          {/* Heading */}
           <motion.h1
-            className={`text-5xl text-center font-extrabold mb-3 ${isLit ? "text-orange-700" : "text-yellow-100"
-              }`}
+            className={`text-5xl text-center font-extrabold mb-3 ${
+              isLit ? "text-orange-700" : "text-yellow-100"
+            }`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -58,18 +57,20 @@ export default function LightDeepak() {
             Happy Diwali
           </motion.h1>
 
-          {/* Subtitle */}
           <motion.p
-            className={`text-lg mb-6 ${isLit ? "text-orange-800" : "text-yellow-300"
-              }`}
+            className={`text-lg mb-6 ${
+              isLit ? "text-orange-800" : "text-yellow-300"
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            {isLit ? "You’ve lit the lamp of joy!" : "Light up this Diya with your flame"}
+            {isLit
+              ? "You’ve lit the lamp of joy!"
+              : "Light up this Diya with your flame"}
           </motion.p>
 
-          {/* Diya (Lamp) */}
+          {/* Diya */}
           <motion.div
             className="relative flex flex-col items-center justify-center"
             animate={{ scale: isLit ? 1.2 : 1 }}
@@ -83,7 +84,6 @@ export default function LightDeepak() {
               className="z-10"
             />
 
-            {/* Flame when lamp is lit */}
             {isLit && (
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
@@ -97,13 +97,8 @@ export default function LightDeepak() {
                     scaleY: [1, 1.1, 0.9, 1],
                     y: [0, -2, 0],
                   }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 0.6,
-                    ease: "easeInOut",
-                  }}
+                  transition={{ repeat: Infinity, duration: 0.6, ease: "easeInOut" }}
                 >
-                  {/* Outer glowing flame */}
                   <div
                     className="absolute w-6 h-14 rounded-t-[60%] rounded-b-[50%] blur-md"
                     style={{
@@ -111,7 +106,6 @@ export default function LightDeepak() {
                         "radial-gradient(circle at 50% 25%, #ffb300 0%, #ff8000 70%, transparent 100%)",
                     }}
                   />
-                  {/* Inner bright flame */}
                   <div
                     className="absolute w-3 h-8 rounded-t-[70%] rounded-b-[50%] blur-[1px]"
                     style={{
@@ -124,21 +118,20 @@ export default function LightDeepak() {
             )}
           </motion.div>
 
-          {/* Draggable flame before lighting */}
+          {/* Draggable Flame */}
           {!isLit && (
             <motion.div
               drag
               dragConstraints={constraintsRef}
-              onDragStart={() => setIsDragging(true)}   // hide text when dragging starts
+              onDragStart={() => setIsDragging(true)}
               onDragEnd={(e, info) => {
-                setIsDragging(false);                   // show text again after release
+                setIsDragging(false);
                 handleDragEnd(e, info);
               }}
               whileDrag={{ scale: 1.2 }}
               className="absolute bottom-32 right-10 cursor-pointer flex flex-col items-center z-20"
             >
               <div className="relative w-12 h-20 flex items-end justify-center">
-                {/* Outer flame */}
                 <motion.div
                   className="absolute bottom-0 w-8 h-16 rounded-t-[60%] rounded-b-[50%] blur-md"
                   style={{
@@ -155,8 +148,6 @@ export default function LightDeepak() {
                     ease: "easeInOut",
                   }}
                 />
-
-                {/* Inner bright flame */}
                 <motion.div
                   className="absolute bottom-0 w-4 h-10 rounded-t-[70%] rounded-b-[50%] blur-[1px]"
                   style={{
@@ -176,7 +167,6 @@ export default function LightDeepak() {
                 />
               </div>
 
-              {/* Instruction text — hidden during drag */}
               <motion.p
                 initial={{ opacity: 1 }}
                 animate={{ opacity: isDragging ? 0 : 1 }}
