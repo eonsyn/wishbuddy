@@ -2,6 +2,7 @@ import AllCategories from "@/components/landingpage/AllCategories";
 import { ChevronsDown } from "lucide-react";
 import Faq from "@/components/landingpage/Faq";
 import Image from "next/image";
+import MediumRectangle from "@/components/ads/adsterra/MediumRectangle";
 export const metadata = {
   title: "WishBuddy",
   description: "...",
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <div className=" w-full bg-amber-100 relative overflow-hidden">
       {/* Grid Background */}
+      
       <div
         className="absolute animate-pulse  inset-0 z-0"
         style={{
@@ -66,6 +68,7 @@ export default function Home() {
         </div>
       </div>
       <AllCategories />
+      <MediumRectangle/>
       <Faq/>
     </div>
   );
