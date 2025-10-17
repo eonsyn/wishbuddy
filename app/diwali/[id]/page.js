@@ -188,7 +188,7 @@ export default async function Page({ params }) {
           href="/diwali"
           className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-lg font-bold text-white bg-gradient-to-r from-orange-500 to-yellow-400 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 animate-pulse"
         >
-          🪔 Create a wish for your's friend
+          🪔 Create a wish for your friend
         </Link>
       </div>
     </div>
