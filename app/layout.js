@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
           content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
         />
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-WZL37ER1NV"
+          src="https://www.googletagmanager.com/gtag/js?id=G-VQX3DX6BVX"
           strategy="afterInteractive"
         />
         <Script id="ga-init" strategy="afterInteractive">
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-WZL37ER1NV', {
+            gtag('config', 'G-VQX3DX6BVX', {
               page_path: window.location.pathname,
             });
           `}
