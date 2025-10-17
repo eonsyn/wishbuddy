@@ -2,7 +2,7 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
- 
+import Script from "next/script";
 export const metadata = {
   title: "WishBuddy - Create Personalized Wishes for Birthdays, Festivals & More",
   description: "WishBuddy lets you create and share unique, personalized wishes for birthdays, Diwali, anniversaries, festivals, and special occasions. Celebrate every moment with heartfelt messages and greetings online.",
@@ -40,6 +40,26 @@ export default function RootLayout({ children }) {
       <body
          
       >
+        <head>
+          <meta
+          name="google-site-verification"
+          content="a519RGXXnU8_HDFGvb_9NLkro6BAy_BnCXPq8fhFTkY"
+        />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-WZL37ER1NV"
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-WZL37ER1NV', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+        </head>
         {/* Middle-top toaster */}
         <Toaster
           position="top-center"
