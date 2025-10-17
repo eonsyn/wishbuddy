@@ -51,7 +51,7 @@ export default function DiwaliForm() {
     try {
       const shareUrl = `${window.location.origin}/diwali/${res.data._id}`;
       await navigator.clipboard.writeText(shareUrl);
-      toast.success("Shareable link copied! ✅");
+      toast.success("Shareable link copied!");
     } catch (err) {
       console.error(err);
       toast.error("Failed to copy 😢");
@@ -79,7 +79,7 @@ const formattedWishParts = (response || "")
   });
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10 bg-gradient-to-br from-orange-100 via-yellow-50 to-white relative">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10  relative">
       <Toaster position="top-center" />
 
       {/* Header */}
@@ -99,10 +99,10 @@ const formattedWishParts = (response || "")
           className={`flex transition-transform duration-700 ${showResult ? "-translate-x-full" : "translate-x-0"}`}
         >
           {/* Form Card */}
-          <div className="w-full flex justify-center px-4 flex-shrink-0">
+          <div className="w-full flex justify-center md:px-4 flex-shrink-0">
             <form
               onSubmit={handleSubmit}
-              className="bg-white/70 backdrop-blur-xl shadow-xl rounded-2xl p-8 w-full max-w-2xl border border-orange-200 space-y-6"
+              className="md:bg-white/70 md:backdrop-blur-xl md:shadow-xl rounded-2xl md:p-8 w-full md:max-w-2xl md:border border-orange-200 space-y-6"
             >
               {/* Wisher & Recipient Names */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -180,7 +180,7 @@ const formattedWishParts = (response || "")
                 disabled={loading}
                 className="w-full py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-transform hover:scale-105 shadow-md flex justify-center items-center gap-2"
               >
-                {loading ? "Generating..." : "Generate Wish 🎉"}
+                {loading ? "Generating..." : "Generate Wish"}
               </button>
             </form>
 

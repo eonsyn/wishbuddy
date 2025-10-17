@@ -1,11 +1,14 @@
 import AllCategories from "@/components/landingpage/AllCategories";
+import { ChevronsDown } from "lucide-react";
+import Faq from "@/components/landingpage/Faq";
+import Image from "next/image";
 export const metadata = {
-  title: "ucsotm",
+  title: "WishBuddy",
   description: "...",
 };
 
 export default function Home() {
-  
+
 
   return (
     <div className=" w-full bg-amber-100 relative overflow-hidden">
@@ -34,23 +37,36 @@ export default function Home() {
       ></div>
       <div className="overflow-hidden h-screen absolute w-full flex items-center justify-center">
 
-        <div className="absolute  blur-2xl bg-gradient-to-t from-amber-100 animate-pulse to-blue-400 rounded-t-full  bottom-0 w-[80vw] h-[80vh] opacity-70 ">
+        <div className="absolute  blur-2xl bg-gradient-to-t from-amber-100 animate-pulse to-red-400 rounded-t-full  bottom-0 w-[80vw] h-[80vh] opacity-70 ">
         </div>
 
       </div>
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-screen w-full p-4 text-center  ">
-        <h1 className="text-4xl font-extrabold text-black uppercase w-1/2 tracking-wider">The Smartest, Funniest Way to Send a Wish.
+        <h1 className="text-4xl font-extrabold text-black uppercase w-full md:w-1/2 tracking-wider">The Smartest, Funniest Way to Send a Wish.
         </h1>
-        <p className="mt-4 text-lg text-gray-700 max-w-xl">
+        <Image
+          src="/landingpage.png"
+          alt="Illustration showing people exchanging fun personalized wishes, representing WishBuddy"
+          width={800}        // recommended width
+          height={500}       // recommended height
+          className="w-full md:hidden rounded-2xl my-2 max-w-4xl mx-auto object-contain"
+          priority           // optional: loads immediately for LCP
+        />
+        <p className="  text-lg text-gray-700 max-w-xl">
           Generate funny, dark, or wholesome wishes instantly
         </p>
         <div className="mt-4 flex text-sm font-semibold text-black  gap-1 ">
-          <span className="px-2 w-32 text-center rounded-full shadow py-1 bg-blue-300 ">No Login</span>
-          <span className="px-2 py-1 rounded-full w-32 text-center shadow bg-red-200">Wish smarter</span>
+          <span className="px-2 w-32 text-center rounded-full shadow py-1 bg-green-300 ">No Login</span>
+          <span className="px-2 py-1 rounded-full w-32 text-center shadow bg-yellow-200">Wish smarter</span>
+        </div>
+        <div className="flex flex-col items-center mt-12 animate-bounce text-gray-700">
+          <ChevronsDown className="w-8 h-8 text-orange-500" />
+          <span className="mt-2 text-sm font-medium">Scroll down</span>
         </div>
       </div>
-<AllCategories/>
+      <AllCategories />
+      <Faq/>
     </div>
   );
 }

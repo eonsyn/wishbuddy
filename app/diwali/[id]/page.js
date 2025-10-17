@@ -32,6 +32,7 @@ export async function generateStaticParams() {
 }
 
 // 🪔 Dynamic Metadata
+// 🪔 Dynamic Metadata for each Diwali wish
 export async function generateMetadata({ params }) {
   try {
     const { id } = params;
@@ -51,15 +52,42 @@ export async function generateMetadata({ params }) {
       return { title: "Diwali Wish Not Found" };
 
     const wish = data.data;
+
     return {
-      title: `Diwali wish to ${wish.name}`,
-      description: `${wish.wisher} sends warm Diwali greetings to ${wish.name}.`,
+      title: `Diwali Wish for ${wish.name} | WishBuddy`,
+      description: `${wish.wisher} sends a heartfelt Diwali greeting to ${wish.name}. Create and share personalized Diwali wishes online with WishBuddy.`,
+      keywords: "Diwali wishes, personalized Diwali messages, send Diwali greetings, festival of lights, WishBuddy, create Diwali wishes online, festive greetings, Diwali messages for friends, Diwali messages for family",
+      author: "WishBuddy Team",
+      openGraph: {
+        title: `WishBuddy - Diwali Wish for ${wish.name}`,
+        description: `${wish.wisher} sends warm Diwali greetings to ${wish.name}. Create your personalized wishes online.`,
+        url: `${baseUrl}/diwali/${wish._id}`,
+        siteName: "WishBuddy",
+        images: [
+          {
+            url: `/diwali/${wish.type}.png`,
+            width: 1200,
+            height: 630,
+            alt: `Diwali wish image for ${wish.name}`,
+          },
+        ],
+        locale: "en_US",
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `WishBuddy - Diwali Wish for ${wish.name}`,
+        description: `${wish.wisher} sends warm Diwali greetings to ${wish.name}.`,
+        images: [`/diwali/${wish.type}.png`],
+        creator: "@WishBuddy",
+      },
     };
   } catch (error) {
     console.error("❌ generateMetadata error:", error);
     return { title: "Diwali Wish Not Found" };
   }
 }
+
 
 // 🪔 Page Component
 export default async function Page({ params }) {

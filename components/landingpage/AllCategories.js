@@ -13,30 +13,13 @@ function AllCategories() {
       color:"bg-pink-300/80",
       icon: <Flame className="w-6 h-6 text-yellow-500" />,
       gradient: "from-amber-400 to-yellow-600",
-    },
+    } ,
+     
     {
-      slug: "birthday",
-      title: "Birthday",
-      desc: "Wish Your Friend With Cripsy Line",
-      link: "/birthday",
- color:"bg-blue-300/80",
-      icon: <PartyPopper className="w-6 h-6 text-pink-500" />,
-      gradient: "from-pink-400 to-purple-600",
-    },
-    {
-      slug: "roast",
-      title: "Roast",
-      desc: "Full-on savage mode",
-      link: "/roast",
-       color:"bg-pink-300/80",
-      icon: <Sparkles className="w-6 h-6 text-red-500" />,
-      gradient: "from-red-400 to-orange-600",
-    },
-    {
-      slug: "roast",
-      title: "Roast",
-      desc: "Full-on savage mode",
-      link: "/roast",
+      slug: "Dowry",
+      title: "Dowry Ai",
+      desc: "Calculate Your Dowry ",
+      link: "https://dowryai.netlify.app",
        color:"bg-blue-300/80",
       icon: <Sparkles className="w-6 h-6 text-red-500" />,
       gradient: "from-red-400 to-orange-600",
@@ -44,7 +27,7 @@ function AllCategories() {
   ];
 
   return (
-    <section className="min-h-screen w-full  flex flex-col items-center justify-center py-16 px-6">
+    <section className="  w-full  flex flex-col items-center justify-start   pb-16 px-6">
       {/* Title */}
       <h1 className="text-5xl font-extrabold text-black mb-4 tracking-wide text-center">
         Explore Wishes  
@@ -62,7 +45,7 @@ function AllCategories() {
             href={cat.link}
             className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br p-[2px] hover:scale-105 transition-transform duration-300`}
           >
-            <div className={` ${cat.color} drop-shadow-2xl   backdrop-blur-sm rounded-2xl p-6 h-full flex flex-col items-center justify-center text-center space-y-3 transition-colors group-hover:bg-slate-800`}>
+            <div className={` ${cat.color} drop-shadow-2xl   backdrop-blur-sm rounded-2xl p-6 h-full flex flex-col items-center justify-center text-center space-y-3 transition-colors group-hover:scale-105`}>
               <div className="p-3 rounded-full bg-white/30 backdrop-blur-sm">
                 {cat.icon}
               </div>
