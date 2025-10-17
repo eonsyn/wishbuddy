@@ -1,0 +1,31 @@
+{
+  "name": "wishbuddy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@tsparticles/fireworks": "^3.9.1",
+    "fireworks-js": "^2.10.8",
+    "lucide-react": "^0.546.0",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.1",
+    "motion": "^12.23.24",
+    "next": "15.5.5",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-hot-toast": "^2.6.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.5",
+    "tailwindcss": "^4"
+  }
+}
