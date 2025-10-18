@@ -14,8 +14,8 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 w-1/2 sm:w-1/3 z-50 flex justify-around items-center rounded-xl 
-      bg-white/20 backdrop-blur-md border border-white/30 text-black shadow-lg py-2 px-4">
+    <nav className="fixed top-2 left-1/2 transform -translate-x-1/2 w-1/2 sm:w-1/3 z-50 flex justify-around items-center rounded-xl 
+      bg-white/20 backdrop-blur-md border border-white/30 text-black shadow-lg py-1.5 px-4">
       
       {navItems.map((item, index) => {
         const isActive = pathname === item.url;

@@ -6,7 +6,7 @@ import Asidebar from "@/components/admin/Asidebar";
 export default function RootLayout({ children }) {
   return (
     <div
-       className=' bg-background flex px-1.5' 
+       className=' bg-background flex pt-4 px-1.5' 
       >
         
           <div className=""> 

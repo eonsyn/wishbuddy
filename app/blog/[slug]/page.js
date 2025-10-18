@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
 
     if (!article) {
       return {
-        title: "Blog Not Found | GPT Resume",
+        title: "Blog Not Found | Wish Buddy",
         description: "This blog post does not exist or has been removed.",
       };
     }
@@ -25,19 +25,19 @@ export async function generateMetadata({ params }) {
     const formattedTitle = article.title || slug.replaceAll("-", " ");
     const description =
       article.content?.find((b) => b.type === "paragraph")?.value.slice(0, 160) ||
-      "Read the latest article on GPT Resume.";
+      "Read the latest article on Wish Buddy.";
     const image =
       article.thumbnailUrl ||
-      "https://tailor0me.vercel.app/default-thumbnail.jpg";
+      "https://wishbuddy.netlify.app/default-thumbnail.jpg";
 
     return {
-      title: `${formattedTitle} | GPT Resume`,
+      title: `${formattedTitle} | Wish Buddy`,
       description,
       keywords: article.tags?.join(", "),
       openGraph: {
-        title: `${formattedTitle} | GPT Resume`,
+        title: `${formattedTitle} | Wish Buddy`,
         description,
-        url: `https://tailor0me.vercel.app/blog/${slug}`,
+        url: `https://wishbuddy.netlify.app/blog/${slug}`,
         images: [
           {
             url: image,
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }) {
       },
       twitter: {
         card: "summary_large_image",
-        title: `${formattedTitle} | GPT Resume`,
+        title: `${formattedTitle} | Wish Buddy`,
         description,
         images: [image],
       },
@@ -58,8 +58,8 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error("Metadata generation error:", error);
     return {
-      title: "Blog | GPT Resume",
-      description: "Read the latest blog posts on GPT Resume.",
+      title: "Blog | Wish Buddy",
+      description: "Read the latest blog posts on Wish Buddy.",
     };
   }
 }
@@ -172,7 +172,7 @@ export default async function BlogPage({ params }) {
 
   return (
     <>
-      <main className="min-h-screen mb-4 w-full flex bg-[var(--background)] text-[var(--text-primary)]">
+      <main className="min-h-screen md:mt-6 mb-4 w-full flex bg-[var(--background)] text-[var(--text-primary)]">
         {/* Left Side Ad */}
         <div className="hidden md:block p-2 w-[20%]">
           <RecentJob />
@@ -201,13 +201,14 @@ export default async function BlogPage({ params }) {
                 #{tag}
               </span>
             ))}
-          </div>
+          </div> 
         </div>
 
         {/* Right Side Ad + AI */}
         <div className="w-[20%] hidden relative md:flex flex-col p-2">
            
           <div className="mt-4">
+            
             <BlockAi article={extractPlainTextFromContent(article.content)} />
           </div>
         </div>

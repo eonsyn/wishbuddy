@@ -14,7 +14,7 @@ function Page() {
   
   if (status === "loading") return <p>Loading...</p>;
   return (
-    <div> 
+    <div className='pt-8  '> 
         <AllPost />
     </div>
   

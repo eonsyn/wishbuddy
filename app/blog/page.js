@@ -1,7 +1,7 @@
  export const revalidate = 60;
 
 import React from 'react';
-// import ArticleCard from "@/components/cards/ArticleCard";
+import ArticleCard from "@/components/cards/ArticleCard";
 
 async function Page() {
   const host = process.env.HOST_URL || 'http://localhost:3000';
@@ -24,9 +24,9 @@ async function Page() {
   articles.forEach((article, idx) => {
     
 
-    // cardsWithAds.push(
-    //   <ArticleCard key={idx} article={article} />
-    // );
+    cardsWithAds.push(
+      <ArticleCard key={idx} article={article} />
+    );
   });
 
   return (
@@ -40,6 +40,7 @@ async function Page() {
   ) : (
     <p className="text-center text-[var(--text-secondary)]">
       No blog posts found.
+      {process.env.HOST_URL }
     </p>
   )}
 </div>
