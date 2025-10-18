@@ -15,7 +15,7 @@ export default function DiwaliPage() {
     <Examples/>
     <DiwaliFaq/>
     </div>
-    <SocialBar/>
+    {/* <SocialBar/> */}
     </>
    
   );
