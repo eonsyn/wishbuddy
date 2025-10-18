@@ -18,8 +18,7 @@ Write a short, hilarious Diwali wish in Hindi-English (Hinglish) for a person na
 Here's some info about them: "${info}".
 
 Important:
-- If the wisher is a boy, use masculine language and tone.
-- If the wisher is a girl, use feminine language and tone.
+- Do not use tu word in the response.
 - Do NOT mention any city unless it is explicitly provided in the info.
 
 Tone based on relationship:
