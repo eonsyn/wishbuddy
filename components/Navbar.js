@@ -27,7 +27,7 @@ export default function Navbar() {
               }`}
             >
               {item.icon}
-              {item.title}
+              <span className='hidden md:block'>{item.title}</span>
             </div>
             {/* Underline animation */}
             <span
