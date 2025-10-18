@@ -9,7 +9,7 @@ import SocialBar from "@/components/ads/adsterra/SocialBar";
 export default function DiwaliPage() {
   
   return (
-    <><div className='bg-gradient-to-br from-orange-100 via-yellow-50 to-white '>
+    <><div className=' pb-6 '>
     <DiwaliForm/>
     <HowItWork/>
     <Examples/>

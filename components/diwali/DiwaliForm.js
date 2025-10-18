@@ -4,7 +4,7 @@ import { Copy, ArrowLeft } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function DiwaliForm() {
-  const [form, setForm] = useState({ wisher: "", name: "", info: "", type: "", mode: "" });
+  const [form, setForm] = useState({ wisher: "", name: "", info: "", type: "", mode: "polite" });
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState(null);
@@ -62,7 +62,7 @@ export default function DiwaliForm() {
 
   // Reset form
   const resetForm = () => {
-    setForm({ wisher: "", name: "", info: "", type: "", mode: "" });
+    setForm({ wisher: "", name: "", info: "", type: "", mode: "polite" });
     setResponse("");
     setRes(null);
     setShowResult(false);
@@ -94,7 +94,7 @@ export default function DiwaliForm() {
           Diwali Wish Generator
         </h1>
         <p className="text-gray-700 max-w-lg mx-auto">
-          Enter details and get a <strong>customized Diwali wish</strong> 🎇
+          Enter details and get a <strong>customized Diwali wish</strong>
         </p>
       </div>
 
@@ -157,47 +157,48 @@ export default function DiwaliForm() {
                     <option value="other">Other</option>
                   </select>
                 </div>
+                {/* Mode Selector */}
                 <div>
-                  <label className="block text-gray-800 font-semibold mb-2">Something about them</label>
-                  <textarea
-                    name="info"
-                    required
-                    rows={3}
-                    value={form.info}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
-                    placeholder="E.g. Always late to every party 😆"
-                  />
+                  <label className="block text-gray-800 font-semibold mb-2">Mode</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="mode"
+                        value="polite"
+                        checked={form.mode === "polite"}
+                        onChange={handleChange}
+                        className="accent-orange-500"
+                      />
+                      Polite
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="mode"
+                        value="roast"
+                        checked={form.mode === "roast"}
+                        onChange={handleChange}
+                        className="accent-orange-500"
+                      />
+                      Roast
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              {/* Mode Selector */}
+
+              </div>
               <div>
-                <label className="block text-gray-800 font-semibold mb-2">Mode</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="mode"
-                      value="polite"
-                      checked={form.mode === "polite"}
-                      onChange={handleChange}
-                      className="accent-orange-500"
-                    />
-                    Polite
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="mode"
-                      value="roast"
-                      checked={form.mode === "roast"}
-                      onChange={handleChange}
-                      className="accent-orange-500"
-                    />
-                    Roast
-                  </label>
-                </div>
+                <label className="block text-gray-800 font-semibold mb-2">Something about them</label>
+                <textarea
+                  name="info"
+                  required
+                  rows={3}
+                  value={form.info}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  placeholder="E.g. Always late to every party 😆"
+                />
               </div>
 
               <button
