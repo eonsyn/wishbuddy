@@ -2,10 +2,11 @@ import AllCategories from "@/components/landingpage/AllCategories";
 import { ChevronsDown } from "lucide-react";
 import Faq from "@/components/landingpage/Faq";
 import Image from "next/image";
+import Link from "next/link";
 import MediumRectangle from "@/components/ads/adsterra/MediumRectangle";
 export const metadata = {
   title: "WishBuddy",
-  description: "...",
+  description: "WishBuddy lets you create and share unique, personalized wishes for birthdays, Diwali, anniversaries, festivals, and special occasions. Celebrate every moment with heartfelt messages and greetings online.",
 };
 
 export default function Home() {
@@ -59,9 +60,15 @@ export default function Home() {
           Generate funny, dark, or wholesome wishes instantly
         </p>
         <div className="mt-4 flex text-sm font-semibold text-black  gap-1 ">
-          <span className="px-2 w-32 text-center rounded-full shadow py-1 bg-green-300 ">No Login</span>
-          <span className="px-2 py-1 rounded-full w-32 text-center shadow bg-yellow-200">Wish smarter</span>
-        </div>
+          <Link href='/diwali'>
+          <span className="px-2 w-32 text-center rounded-full shadow py-1 bg-green-300 ">Diwali Wish</span>
+          </Link>
+        <Link
+        href='https://dowryai.netlify.app'>
+        <span className="px-2 py-1 rounded-full w-32 text-center shadow bg-yellow-200">Check Dowry</span>
+        
+        </Link>
+          </div>
         <div className="flex flex-col items-center mt-12 animate-bounce text-gray-700">
           <ChevronsDown className="w-8 h-8 text-orange-500" />
           <span className="mt-2 text-sm font-medium">Scroll down</span>
