@@ -18,18 +18,14 @@ export default function TermsPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">1. Acceptance of Terms</h2>
           <p>
-            By using WishBuddy (“we”, “our”, or “us”), you agree to comply with and be
-            bound by these Terms of Service (“Terms”). If you do not agree, please do
-            not use the Site.
+            By using WishBuddy (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;), you agree to comply with and be
+            bound by these Terms of Service (&quot;Terms&quot;). If you do not agree, please do not use the Site.
           </p>
         </section>
 
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">2. Use of the Site</h2>
-          <p>
-            You may use the Site for personal, non-commercial purposes only. You agree
-            not to:
-          </p>
+          <p>You may use the Site for personal, non-commercial purposes only. You agree not to:</p>
           <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
             <li>Copy, reproduce, or redistribute content without permission.</li>
             <li>Engage in spam, hacking, or unlawful activity.</li>
@@ -40,9 +36,8 @@ export default function TermsPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">3. Content</h2>
           <p>
-            All content on WishBuddy, including articles, images, and videos (“Content”),
-            is owned by WishBuddy or its contributors. You may view, read, and share
-            content for personal use only.
+            All content on WishBuddy, including articles, images, and videos (&quot;Content&quot;),
+            is owned by WishBuddy or its contributors. You may view, read, and share content for personal use only.
           </p>
         </section>
 
@@ -76,8 +71,14 @@ export default function TermsPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">7. Privacy</h2>
           <p>
-            Our use of your data is governed by our Privacy Policy. Please read it
-            carefully to understand how we collect, use, and protect your information.
+            Our use of your data is governed by our{" "}
+            <a
+              href="/privacy"
+              className="text-blue-500 underline"
+            >
+              Privacy Policy
+            </a>
+            . Please read it carefully to understand how we collect, use, and protect your information.
           </p>
         </section>
 
@@ -93,7 +94,7 @@ export default function TermsPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">9. Limitation of Liability</h2>
           <p>
-            The Site is provided "as is" and "as available." WishBuddy is not liable for
+            The Site is provided &quot;as is&quot; and &quot;as available.&quot; WishBuddy is not liable for
             any direct or indirect damages resulting from the use of the Site.
           </p>
         </section>
@@ -108,16 +109,15 @@ export default function TermsPage() {
         </section>
 
         <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
+          <h2 className="text-2xl font-semibold mb-2">11. Contact Us</h2>
           <p>
-            If you have questions about these Terms, you can contact us at:{" "}
+            If you have questions about these Terms, you can contact us at{" "}
             <a
               href="mailto:degital.builder@gmail.com"
               className="text-blue-500 underline"
             >
               degital.builder@gmail.com
-            </a>
-            .
+            </a>.
           </p>
         </section>
       </div>

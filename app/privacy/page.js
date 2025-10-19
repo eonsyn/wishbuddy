@@ -19,10 +19,15 @@ export default function PrivacyPolicyPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">1. Introduction</h2>
           <p>
-            Welcome to WishBuddy (“we”, “our”, or “us”). This Privacy Policy explains how
-            we collect, use, and protect your information when you visit our website
-            [https://wishbuddy.netlify.app](https://wishbuddy.netlify.app) (the “Site”).
-            By using our Site, you consent to the practices described in this policy.
+            Welcome to WishBuddy (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). This Privacy Policy explains how
+            we collect, use, and protect your information when you visit our website{" "}
+            <a
+              href="https://wishbuddy.netlify.app"
+              className="text-blue-500 underline"
+            >
+              https://wishbuddy.netlify.app
+            </a>{" "}
+            (the &quot;Site&quot;). By using our Site, you consent to the practices described in this policy.
           </p>
         </section>
 
@@ -40,7 +45,7 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-2xl font-semibold mb-2">3. How We Use Your Information</h2>
           <p>We use the information we collect to:</p>
           <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
-            <li>Improve and maintain the Site’s performance and functionality.</li>
+            <li>Improve and maintain the Site&apos;s performance and functionality.</li>
             <li>Send newsletters, updates, and promotional information (if you opt in).</li>
             <li>Serve personalized ads through third-party advertising networks like Google AdSense.</li>
             <li>Analyze trends and usage to improve content and user experience.</li>
@@ -75,7 +80,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">7. Children’s Privacy</h2>
+          <h2 className="text-2xl font-semibold mb-2">7. Children&apos;s Privacy</h2>
           <p>
             Our Site is not intended for children under 13 years of age. We do not knowingly
             collect personal information from children.
@@ -102,14 +107,13 @@ export default function PrivacyPolicyPage() {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">10. Contact Us</h2>
           <p>
-            If you have any questions about this Privacy Policy, you can contact us at:{" "}
+            If you have any questions about this Privacy Policy, you can contact us at{" "}
             <a
               href="mailto:degital.builder@gmail.com"
               className="text-blue-500 underline"
             >
               degital.builder@gmail.com
-            </a>
-            .
+            </a>.
           </p>
         </section>
       </div>
