@@ -41,7 +41,6 @@ End with a natural, witty Diwali closing line, for example:
 - "Ab glow toh aapke chehre ka hai, Diwali ki lights bhi sharma jaaye! 😎✨"
 - "Bas, phir se patakha na ban jao—gharwale alert! 😂💥"
 - "Aapke saath Diwali aur bhi roshan lagti hai! 💛🎇"
-- "Bhai, patakha toh aap ho—fireworks bas aapke smile ke saath! 🔥😉"
 - "Happy Diwali! Roshni, masti, aur dhamaka aapke saath ho! 🎉💫"
 
 💫 Bonus: If it fits naturally, add a short 1–2 line funny shayari in Hinglish.
