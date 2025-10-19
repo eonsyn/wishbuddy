@@ -16,6 +16,7 @@ function Page() {
   const [title, setTitle] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [blocks, setBlocks] = useState([{ ...emptyBlock }]);
   const [editIndex, setEditIndex] = useState(null);
@@ -57,6 +58,7 @@ function Page() {
         setBlocks(article.content);
         setThumbnailUrl(article.thumbnailUrl);
         setTags(article.tags);
+        setDescription(article?.description);
         setIsPublish(article.isPublished);
       } catch (err) {
         console.error('Error fetching article:', err);
@@ -169,6 +171,7 @@ function Page() {
 
       author: 'Admin',
       tags,
+      description,
       thumbnailUrl: thumbnailUrl,
       content: cleanedBlocks,
       _id: id,
@@ -209,6 +212,8 @@ function Page() {
       {showPopup && (
         <SubmitPopup
         show={showPopup}
+        description={description}
+        setDescription={setDescription}
         onClose={() => setShowPopup(false)}
         onSubmit={handleSubmit}
         thumbnailUrl={thumbnailUrl}

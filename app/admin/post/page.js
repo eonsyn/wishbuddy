@@ -3,14 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import BlockEditor from '@/components/blog/BlockEditor';
 import BlockRenderer from '@/components/blog/BlockRenderer';
 import SubmitPopup from '@/components/admin/SubmitPopup';
-
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+ 
 const emptyBlock = [{ type: 'paragraph', value: '', level: 1, items: [] }];
 
 function Page() {
     const [showPopup, setShowPopup] = useState(false);
     const [thumbnailUrl, setThumbnailUrl] = useState('');
+    const [description,setDescription]=useState('');
     const [expiredAt, setexpiredAt] = useState('')
     const [tags, setTags] = useState([]);
     const [isPublish, setIsPublish] = useState(false)
@@ -133,6 +132,7 @@ function Page() {
 
             thumbnailUrl,
             content: cleanedBlocks,
+            description,
             createdAt: new Date(),
             updatedAt: new Date(),
             isPublished: isPublish,
@@ -168,6 +168,8 @@ function Page() {
             {showPopup && (
                 <SubmitPopup
                     show={showPopup}
+                    description={description}
+                    setDescription={setDescription}
                     setexpiredAt={setexpiredAt}
                     expiredAt={expiredAt}
                     onClose={() => setShowPopup(false)}

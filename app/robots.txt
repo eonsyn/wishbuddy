@@ -1,5 +1,7 @@
-User-Agent: *
+User-agent: *
 Allow: /
-Disallow: /private/
+
+User-agent: Googlebot-Image
+Allow: /
 
 Sitemap: https://wishbuddy.netlify.app/sitemap.xml

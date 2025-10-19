@@ -25,6 +25,9 @@ function Footer() {
             <li>
               <Link href="#faq" className="hover:text-orange-500 transition">FAQ</Link>
             </li>
+            <li>
+              <Link href="/blog" className="hover:text-orange-500 transition">Blog</Link>
+            </li>
              
              
           </ul>

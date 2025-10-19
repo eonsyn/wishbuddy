@@ -12,7 +12,6 @@ export async function generateMetadata({ params }) {
     const res = await fetch(`${process.env.HOST_URL}/api/blog/${slug}`, {
       next: { revalidate: 600 },
     });
-
     const { article } = await res.json();
 
     if (!article) {
@@ -28,12 +27,20 @@ export async function generateMetadata({ params }) {
       "Read the latest article on Wish Buddy.";
     const image =
       article.thumbnailUrl ||
-      "https://wishbuddy.netlify.app/default-thumbnail.jpg";
+      "https://wishbuddy.netlify.app/default-thumnail-blog.jpeg";
 
     return {
       title: `${formattedTitle} | Wish Buddy`,
       description,
       keywords: article.tags?.join(", "),
+      robots: {
+        index: true,
+        follow: true,
+        maxImagePreview: "large",
+      },
+      alternates: {
+        canonical: `https://wishbuddy.netlify.app/blog/${slug}`,
+      },
       openGraph: {
         title: `${formattedTitle} | Wish Buddy`,
         description,
@@ -63,6 +70,7 @@ export async function generateMetadata({ params }) {
     };
   }
 }
+
 
 export const revalidate = 3600;
 

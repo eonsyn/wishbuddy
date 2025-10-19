@@ -14,6 +14,7 @@ const articleSchema = new mongoose.Schema({
   author: String,
   tags: [String],
   thumbnailUrl: String,
+  description: String,
   content: [contentBlockSchema],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

@@ -19,7 +19,7 @@ export async function GET(req) {
     await connectDB();
 
     // Only select specific fields 
-    const articles = await Article.find({ isPublished: true }).select('slug title thumbnailUrl author createdAt').sort({ createdAt: -1 });;
+    const articles = await Article.find({ isPublished: true }).select('slug title thumbnailUrl description  author createdAt').sort({ createdAt: -1 });;
 
     return NextResponse.json({ success: true, articles });
   } catch (error) {
@@ -34,7 +34,7 @@ export async function PUT(req) {
     await connectDB();
     const body = await req.json();
 
-    const { _id, title, slug, author, tags, thumbnailUrl, content, isPublished } = body;
+    const { _id, title,description, slug, author, tags, thumbnailUrl, content, isPublished } = body;
  
     if (!_id) {
       return NextResponse.json({ success: false, message: 'Article ID (_id) is required' }, { status: 400 });
@@ -48,6 +48,7 @@ export async function PUT(req) {
         author,
         tags,
         thumbnailUrl,
+        description,
         content,
         isPublished,
         updatedAt: new Date()
