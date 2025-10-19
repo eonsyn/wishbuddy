@@ -38,8 +38,7 @@ Guidelines:
 
 🌙 Optional but preferred:
 End with a natural, witty Diwali closing line, for example:
-- "Ab glow toh aapke chehre ka hai, Diwali ki lights bhi sharma jaaye! 😎✨"
-- "Bas, phir se patakha na ban jao—gharwale alert! 😂💥"
+- "Ab glow toh aapke chehre ka hai, Diwali ki lights bhi sharma jaaye! 😎✨" 
 - "Aapke saath Diwali aur bhi roshan lagti hai! 💛🎇"
 - "Happy Diwali! Roshni, masti, aur dhamaka aapke saath ho! 🎉💫"
 
