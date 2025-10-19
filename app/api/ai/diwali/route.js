@@ -10,46 +10,58 @@ export async function POST(req) {
 
     await connectDB();
 
-    // Base personality prompt
+    // 🎇 Base personality prompt
     let prompt = `
-You are a fun, lively AI persona with full Indian style—mix slang, humor, and attitude.
+You are a fun, lively AI persona with full Indian style—mix Bollywood drama, desi humor, and street-smart attitude. 
+Write a short, hilarious Diwali wish in Hinglish (Hindi + English mix) for a person named **${name}**, whose relationship is **${type}**.
+Here's what you know about them: "${info}".
 
-Write a short, hilarious Diwali wish in Hindi-English (Hinglish) for a person named ${name}, whose relationship is ${type}.
-Here's some info about them: "${info}".
+Guidelines:
+- Keep it under 3 sentences—punchy, funny, and unforgettable.
+- DO NOT use "tu" (stay friendly but not too informal).
+- Do NOT mention any city unless it's in the info.
+- Add emojis naturally if they fit the tone.
 
-Important:
-- Do not use tu word in the response.
-- Do NOT mention any city unless it is explicitly provided in the info.
+🎭 Tone rules (based on relationship):
+- **Friend:** Full roast mode! Mischief, sarcasm, inside jokes, and over-the-top fun.
+- **Brother:** Sibling banter—tease laziness, fights, and funny habits.
+- **Sister:** Playful sass! Gossip, drama, and cute chaos.
+- **Couple:** Flirty, naughty, romantic teasing—hint at spark and chemistry.
+- **Parent:** Warm, witty, and playful—cute family humor.
+- **Colleague:** Office vibes—light sarcasm, work stress jokes.
+- **Neighbor:** Gossip-style humor—quirky, funny, and overfamiliar.
+- **Crush:** Sweet + flirty with shy humor—make them smile.
+- **Other:** Friendly, witty, and full of Diwali vibes.
 
-Tone based on relationship:
-- Friend: roast them hard! Darkly funny, teasing, inside jokes, mischief, sarcasm.
-- Brother: full-on sibling roast! Tease laziness, fights, weird habits.
-- Sister: playful sass! Mention gossip, nagging, cute quirks.
-- Couple: flirty, naughty, hint at romance, cheeky intimacy.
-- Parent: casual, slightly funny, playful, cheeky.
-- Colleague: office humor, subtle sarcasm, work jokes.
-- Neighbor: light gossip, exaggerate habits, playful.
-- Crush: flirty, cute teasing, bashful humor.
-- Other: friendly, witty, fun, light-hearted humor.
+✨ Must include this Diwali signature line somewhere (fit it smartly):
+"Log toh patakha aise hi badnaam hai, asli patakha toh aap ho!"
 
-Optional: Include a tiny 1-2 line shayari in Hinglish if it fits naturally, adding charm and humor. 
-Keep it under 3 sentences total—punchy, witty, unforgettable, with Desi Diwali vibes (sweets, crackers, family drama, neighbor fights, typical chaos). Include emojis if suitable. 
-Reply as if chatting right now, full masti aur tadka ke saath.`
+🌙 Optional but preferred:
+End with a natural, witty Diwali closing line, for example:
+- "Ab glow toh aapke chehre ka hai, Diwali ki lights bhi sharma jaaye! 😎✨"
+- "Bas, phir se patakha na ban jao—gharwale alert! 😂💥"
+- "Aapke saath Diwali aur bhi roshan lagti hai! 💛🎇"
+- "Bhai, patakha toh aap ho—fireworks bas aapke smile ke saath! 🔥😉"
+- "Happy Diwali! Roshni, masti, aur dhamaka aapke saath ho! 🎉💫"
 
+💫 Bonus: If it fits naturally, add a short 1–2 line funny shayari in Hinglish.
 
-    // Adjust prompt based on mode
+Keep the tone full masti aur tadka ke saath—just like a WhatsApp message sent in peak Diwali mood! 💥
+`;
+
+    // 🎨 Adjust prompt style based on mode
     if (mode === "roast") {
-      prompt += "\nMake it cringy, cheeky, roast-style, sharp, and funny—no sugarcoating!";
+      prompt += "\nNow make it extra savage, cheeky, roast-style, full of dramatic desi humor—no sugarcoating! 🔥";
     } else if (mode === "polite") {
-      prompt += "\nMake it kind, sweet, polite, and heartwarming—friendly, positive vibes!";
+      prompt += "\nNow make it warm, kind, sweet, and heartfelt—still witty, but full of positive Diwali vibes! 🌸";
     }
 
-    // Generate wish
+    // 🪄 Generate the wish
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite-preview-09-2025" });
     const result = await model.generateContent(prompt);
     const wishText = result.response.text();
 
-    // Save to DB
+    // 💾 Save wish to DB
     const wishDoc = await Wish.create({
       wisher,
       type,
