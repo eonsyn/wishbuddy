@@ -88,10 +88,10 @@ function ImageComponent({ imageUrl, alt }) { // Removed width, height from props
           {/* Close Button */}
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors p-2 rounded-full backdrop-blur-sm bg-white/20"
+            className="absolute top-4 right-4 md:right-6 text-white hover:text-gray-300 transition-colors p-2 rounded-full backdrop-blur-sm bg-white/20"
             title="Close image viewer"
           >
-            <X className="w-6 h-6 text-red-700 bg-red-200 rounded-full p-1" />
+            <X className="w-8 md:w-14 md:h-14 h-8 text-red-700 bg-white animate-pulse rounded-full p-1" />
           </button>
           
           {/* Alt Text Caption */}
