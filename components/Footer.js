@@ -36,7 +36,7 @@ function Footer() {
         {/* Contact Info */}
         <div>
           <h4 className="text-lg font-semibold text-gray-800 mb-4">Contact</h4>
-          <p>Email: <a href="mailto:support@wishbuddy.com" className="text-orange-500 underline">degital.builder@gmail.com</a></p>
+          <p>Email: <a href="mailto:degital.builder@gmail.com" className="text-orange-500 underline">degital.builder@gmail.com</a></p>
            
           <p className="mt-2 text-gray-500 text-sm">We typically respond within 24 hours.</p>
         </div>
