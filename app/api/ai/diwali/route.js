@@ -122,7 +122,7 @@ export async function GET(req) {
     }
 
     await connectDB();
-    const wish = await Wish.findById(id, "name wisher generatedWish");
+    const wish = await Wish.findById(id, "name wisher generatedWish type");
 
     if (!wish) {
       return Response.json(
