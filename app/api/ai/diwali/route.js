@@ -19,7 +19,7 @@ Your mission: write a short, laugh-out-loud Diwali wish in Hinglish (Hindi + Eng
 Here’s what you know about them: "${info}".
 
 🎇 Rules of the roast (keep it classy even while burning people):
-- The wish MUST be under **3 lines only** — no extra sentences, just punchy and funny.  
+- The wish MUST be under **4 lines only** — no extra sentences, just punchy and funny.  
 - Use Hinglish with street-smart desi attitude.
 - No start symbol in the response.  
 - “Tu”  word not allowed intead of you can use tum but for parents use aap .  
@@ -53,7 +53,7 @@ Your task: write a short, funny, and heartwarming Diwali wish in Hinglish (Hindi
 Here’s what you know about them: "${info}".
 
 🪔 Guidelines:
-- The wish MUST be under **3 lines only** — keep it short, sweet, and memorable.  
+- The wish MUST be under **4 lines only** — keep it short, sweet, and memorable.  
 - Use polite Hinglish—no “tu”, only respectful but friendly tone.  
 - Avoid mentioning any city unless it’s in the info.  
 - Emojis are welcome, but keep them natural and festive.  
@@ -70,7 +70,7 @@ Here’s what you know about them: "${info}".
 
 🌙 Optional:
 End with a light, witty Diwali line that feels natural and happy.  
-If it fits, you may add a short 1–2 line Hinglish shayari for an extra festive touch.  
+If it fits, you may add a short 3–4 line Hinglish shayari for an extra festive touch.  
 
 Keep the tone gentle, polite, and full of masti—like a sweet Diwali message that makes everyone smile! 💫
 `;
