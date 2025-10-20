@@ -35,7 +35,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <div className='bg-gradient-to-br from-orange-100 via-yellow-50 to-white w-screen min-h-screen pt-6'>
+    <div className='bg-gradient-to-br from-orange-100 via-yellow-50 to-white w-screen min-h-screen  md:pt-6'>
           
         {children} 
       </div>

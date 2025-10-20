@@ -20,7 +20,8 @@ Here’s what you know about them: "${info}".
 
 🎇 Rules of the roast (keep it classy even while burning people):
 - The wish MUST be under **3 lines only** — no extra sentences, just punchy and funny.  
-- Use Hinglish with street-smart desi attitude.  
+- Use Hinglish with street-smart desi attitude.
+- No start symbol in the response.  
 - “Tu”  word not allowed intead of you can use tum but for parents use aap .  
 - No city name unless it’s in the info.  
 - Emojis? Use like a pro—each one should add to the punchline, not kill the vibe.  
@@ -137,5 +138,53 @@ export async function GET(req) {
       { success: false, error: err.message },
       { status: 500 }
     );
+  }
+}
+
+
+// ✏️ PUT: Update an existing wish (regenerate or modify fields)
+export async function PUT(req) {
+  try {
+    const { id, wisher, name, info, type, mode } = await req.json();
+
+    if (!id) {
+      return Response.json({ success: false, error: "Wish ID is required for update" }, { status: 400 });
+    }
+
+    await connectDB();
+
+    // 🪄 Reuse the same prompt logic
+    let prompt = `
+You are an AI rewriting a Diwali wish in Hinglish for **${name}**, whose relationship is **${type}**.  
+Here’s what you know about them: "${info}".  
+The wish must be **under 3 lines**, and match the "${mode}" tone (roast/polite).  
+Make it fresh, natural, and full of Diwali energy! 🪔✨
+`;
+
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash-lite-preview-09-2025",
+    });
+    const result = await model.generateContent(prompt);
+    const updatedWishText = result.response.text();
+
+    // 🧾 Update the document
+    const updatedWish = await Wish.findByIdAndUpdate(
+      id,
+      { wisher, name, info, type, mode, generatedWish: updatedWishText },
+      { new: true }
+    );
+
+    if (!updatedWish) {
+      return Response.json({ success: false, error: "Wish not found" }, { status: 404 });
+    }
+
+    return Response.json({
+      success: true,
+      message: "Wish updated successfully!",
+      data: updatedWish,
+    });
+  } catch (err) {
+    console.error("❌ Error updating wish:", err);
+    return Response.json({ success: false, error: err.message }, { status: 500 });
   }
 }

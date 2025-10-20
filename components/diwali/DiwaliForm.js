@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Copy, ArrowLeft } from "lucide-react";
+import { Copy, ArrowLeft, Save } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function DiwaliForm() {
@@ -9,11 +9,13 @@ export default function DiwaliForm() {
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
-  // Handle form input changes
+  // Handle form input
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  // Submit form and fetch AI-generated wish
+  // Submit and generate new wish
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -26,36 +28,30 @@ export default function DiwaliForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       const data = await res.json();
       setRes(data);
 
       if (data.success) {
         setResponse(data.message);
+        toast.success("Wish generated! 🎇");
         setTimeout(() => setShowResult(true), 50);
-      } else {
-        setResponse("Something went wrong! 😭");
-      }
+      } else toast.error("Something went wrong! 😭");
     } catch (error) {
       console.error(error);
-      setResponse("Server error, try again later.");
+      toast.error("Server error, try again later.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Copy shareable link
+  // Copy link
   const handleCopy = async () => {
-    if (!res?.data?._id) {
-      toast.error("No wish to copy! ❌");
-      return;
-    }
+    if (!res?.data?._id) return toast.error("No wish to copy! ❌");
     try {
       const shareUrl = `${window.location.origin}/diwali/${res.data._id}`;
       await navigator.clipboard.writeText(shareUrl);
-      toast.success("Shareable link copied!");
-    } catch (err) {
-      console.error(err);
+      toast.success("Shareable link copied! ");
+    } catch {
       toast.error("Failed to copy 😢");
     }
   };
@@ -66,28 +62,39 @@ export default function DiwaliForm() {
     setResponse("");
     setRes(null);
     setShowResult(false);
+    setIsEdited(false);
   };
 
-  // Format text with *bold* parts
-  const formattedWishParts = (response || "")
-    .split(/(\*.*?\*)/g)
-    .map((part, index) =>
-      part.startsWith("*") && part.endsWith("*") ? (
-        <strong key={index} className="font-semibold text-orange-800">
-          {part.slice(1, -1)}
-        </strong>
-      ) : (
-        <span key={index}>{part}</span>
-      )
-    );
+  // Update wish in DB
+  const handleUpdate = async () => {
+    if (!res?.data?._id) return toast.error("Wish not found for update!");
+    setUpdating(true);
+    try {
+      const putRes = await fetch("/api/ai/diwali", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: res.data._id, updatedWish: response }),
+      });
+      const data = await putRes.json();
+      if (data.success) {
+        toast.success("Wish updated successfully!");
+        setIsEdited(false);
+        setRes(data);
+      } else toast.error("Update failed 😢");
+    } catch (err) {
+      console.error(err);
+      toast.error("Error updating wish!");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
-  // Dynamic heading based on mode
-  const modeHeading = form.mode === "roast" ? "Roast Wish 😏" : form.mode === "polite" ? "Polite Wish 🎉" : "Your Wish";
+  const modeHeading =
+    form.mode === "roast" ? " Roast Wish " : form.mode === "polite" ? " Polite Wish" : "Your Wish";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center   px-6 py-4 md:py-10 relative">
       <Toaster position="top-center" />
-
       {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-orange-700 mb-3">
@@ -98,17 +105,18 @@ export default function DiwaliForm() {
         </p>
       </div>
 
-      {/* Card Container */}
+      {/* Container */}
       <div className="relative w-full max-w-4xl overflow-hidden">
-        <div className={`flex transition-transform duration-700 ${showResult ? "-translate-x-full" : "translate-x-0"}`}>
-
-          {/* Form Card */}
+        <div
+          className={`flex transition-transform duration-700 ${showResult ? "-translate-x-full" : "translate-x-0"
+            }`}
+        >
+          {/* --- FORM CARD --- */}
           <div className="w-full flex justify-center md:px-4 flex-shrink-0">
             <form
               onSubmit={handleSubmit}
               className="md:bg-white/70 md:backdrop-blur-xl md:shadow-xl rounded-2xl md:p-8 w-full md:max-w-2xl md:border border-orange-200 space-y-6"
             >
-              {/* Names */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">Your Name</label>
@@ -118,7 +126,7 @@ export default function DiwaliForm() {
                     required
                     value={form.wisher}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400"
                     placeholder="Enter your name"
                   />
                 </div>
@@ -130,13 +138,13 @@ export default function DiwaliForm() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400"
                     placeholder="Enter recipient's name"
                   />
                 </div>
               </div>
 
-              {/* Relationship & Info */}
+              {/* Relationship and Mode */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">Relationship</label>
@@ -145,7 +153,7 @@ export default function DiwaliForm() {
                     required
                     value={form.type}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400"
                   >
                     <option value="">Select</option>
                     <option value="friend">Friend</option>
@@ -157,46 +165,38 @@ export default function DiwaliForm() {
                     <option value="other">Other</option>
                   </select>
                 </div>
-                {/* Mode Selector */}
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">Mode</label>
                   <div className="flex gap-4">
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="mode"
-                        value="polite"
-                        checked={form.mode === "polite"}
-                        onChange={handleChange}
-                        className="accent-orange-500"
-                      />
-                      Polite
-                    </label>
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="mode"
-                        value="roast"
-                        checked={form.mode === "roast"}
-                        onChange={handleChange}
-                        className="accent-orange-500"
-                      />
-                      Roast
-                    </label>
+                    {["polite", "roast"].map((m) => (
+                      <label key={m} className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="mode"
+                          value={m}
+                          checked={form.mode === m}
+                          onChange={handleChange}
+                          className="accent-orange-500"
+                        />
+                        {m === "polite" ? "Polite" : "Roast"}
+                      </label>
+                    ))}
                   </div>
                 </div>
-
-
               </div>
+
+              {/* Info */}
               <div>
-                <label className="block text-gray-800 font-semibold mb-2">Something about them</label>
+                <label className="block text-gray-800 font-semibold mb-2">
+                  Something about them
+                </label>
                 <textarea
                   name="info"
                   required
                   rows={3}
                   value={form.info}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  className="w-full px-4 py-2 text-black border border-orange-300 rounded-xl focus:ring-2 focus:ring-orange-400"
                   placeholder="E.g. Always late to every party 😆"
                 />
               </div>
@@ -211,50 +211,74 @@ export default function DiwaliForm() {
             </form>
           </div>
 
-          {/* Result Card */}
+          {/* --- RESULT CARD --- */}
           <div className="w-full flex justify-center md:px-4 flex-shrink-0">
-            {loading || !response ? (
+            {!response ? (
               <div className="bg-white/80 border border-orange-200 rounded-2xl p-6 shadow-lg animate-pulse w-full max-w-2xl">
                 <div className="h-6 bg-gray-300 rounded mb-4 w-3/4"></div>
                 <div className="h-4 bg-gray-300 rounded mb-2 w-full"></div>
                 <div className="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
-                <div className="h-4 bg-gray-300 rounded mb-2 w-2/3"></div>
-                <div className="flex justify-center gap-4 mt-4">
-                  <div className="h-8 w-24 bg-gray-300 rounded"></div>
-                  <div className="h-8 w-32 bg-gray-300 rounded"></div>
-                </div>
               </div>
             ) : (
-              <div className="bg-white/90 border border-orange-200 rounded-2xl p-6 shadow-lg w-full md:max-w-2xl relative mx-auto">
-                <h2 className="text-2xl font-bold text-orange-700 mb-4 text-center">
-                  {modeHeading}
-                </h2>
-                <p className="text-gray-700 italic mb-6 text-center">
-                  {formattedWishParts} <br />
-                  <span className="block mt-2 text-sm text-gray-500">
-                    — from {form.wisher || "Anonymous"}
-                  </span>
-                </p>
+             <div className="bg-white/90 backdrop-blur border border-orange-200 rounded-2xl p-6 shadow-xl w-full md:max-w-2xl relative transition-all duration-300">
+  {/* 🔙 Back Button */}
+  <button
+    onClick={resetForm}
+    className="absolute top-4 left-4 p-3 rounded-full bg-orange-500 text-white hover:bg-orange-600 shadow-md transition-all duration-200"
+  >
+    <ArrowLeft size={18} />
+  </button>
 
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                  <button
-                    className="flex items-center gap-2 px-4 py-2 bg-orange-600 cursor-pointer rounded-lg hover:bg-orange-700 text-white transition shadow-sm"
-                    onClick={handleCopy}
-                  >
-                    <Copy size={18} /> Copy & Share
-                  </button>
-                  <span className="text-sm text-gray-500 sm:ml-2 text-center">
-                    Share this link with your friends!
-                  </span>
-                </div>
+  {/* 🪔 Heading */}
+  <h2 className="text-2xl font-bold text-orange-700 mb-2 text-center tracking-wide">
+    {modeHeading}
+  </h2>
 
-                <button
-                  className="flex items-center gap-2 absolute top-4 left-4 p-3 rounded-full bg-orange-500 text-white hover:bg-orange-600 shadow-md transition"
-                  onClick={resetForm}
-                >
-                  <ArrowLeft size={18} />
-                </button>
-              </div>
+  <p className="text-sm   text-gray-600 text-center mb-4">
+     This is <strong>AI response</strong>  You can update the wish if needed, save your version, and then share it! 
+  </p>
+
+  {/* 📝 Textarea */}
+  <textarea
+    value={response}
+    onChange={(e) => {
+      setResponse(e.target.value);
+      setIsEdited(true);
+    }}
+    rows={5}
+    placeholder="Write or edit your wish here..."
+    className="w-full p-3 border border-orange-300 rounded-xl text-gray-800 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none bg-white/70 placeholder:text-gray-400 transition"
+  />
+
+  {/* ✍️ Wisher Info */}
+  <p className="text-sm text-gray-500 mt-2 text-center italic">
+    — from {form.wisher || "Anonymous"}
+  </p>
+
+  {/* 💾 Update Button */}
+  {isEdited && (
+    <button
+      onClick={handleUpdate}
+      disabled={updating}
+      className="mt-4 w-full py-2.5 bg-green-500 hover:bg-green-600 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all duration-200"
+    >
+      <Save size={18} />
+      {updating ? "Updating..." : "Save Updated Wish"}
+    </button>
+  )}
+
+  {/* 📋 Copy Button */}
+  <div className="flex justify-center mt-6">
+    <button
+      onClick={handleCopy}
+      className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-medium transition-all duration-200 shadow-sm"
+    >
+      <Copy size={18} />
+      Copy & Share
+    </button>
+  </div>
+</div>
+
             )}
           </div>
         </div>

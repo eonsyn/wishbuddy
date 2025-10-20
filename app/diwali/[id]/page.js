@@ -158,45 +158,45 @@ export default async function Page({ params }) {
         <h1 className="text-4xl capitalize font-extrabold text-orange-700 mb-6">
           {wish.name} ko Diwali Wish
         </h1>
-<div className="md:flex md:gap-3">
-   {/* Wish Image */}
-        <div className="h-52 md:h-full mb-3 rounded-2xl  w-full overflow-hidden">
-          <Image
-            src={`/diwali/${wish.type}.png`}
-            alt={`${wish.type} Diwali illustration`}
-            width={800}
-            height={400}
-            className="object-cover w-full h-full scale-105"
-            priority
-          />
+        <div className="md:flex md:gap-3">
+          {/* Wish Image */}
+          <div className="h-52 md:h-full mb-3 rounded-2xl  w-full overflow-hidden">
+            <Image
+              src={`/diwali/${wish.type}.png`}
+              alt={`${wish.type} Diwali illustration`}
+              width={800}
+              height={400}
+              className="object-cover w-full h-full scale-105"
+              priority
+            />
+          </div>
+
+          {/* Message */}
+          <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 text-gray-800 font-medium leading-relaxed text-left shadow-inner">
+            {formattedWishParts}
+          </div>
+
         </div>
 
-        {/* Message */}
-        <div className="bg-orange-50 border border-orange-200 rounded-2xl p-6 text-gray-800 font-medium leading-relaxed text-left shadow-inner">
-          {formattedWishParts}
-        </div>
-
-  </div>
-       
         {/* Wisher Info */}
         <p className="text-gray-600 italic mb-6 text-lg text-end">
           By - {wish.wisher}
         </p>
-         <div className="mt-3 flex justify-center">
-        <Link
-          href="/diwali"
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-lg font-bold text-white bg-gradient-to-r from-orange-500 to-yellow-400 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 animate-pulse"
-        >
-          Create a wish for your friend
-        </Link>
-      </div>
+        <div className="mt-3 flex justify-center">
+          <Link
+            href="/diwali"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-lg font-bold text-white bg-gradient-to-r from-orange-500 to-yellow-400 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 animate-pulse"
+          >
+            Create a wish for your friend
+          </Link>
+        </div>
       </div>
 
       {/* Button */}
-     
-     
-            <MediumRectangle/>
-             
+
+
+      <MediumRectangle />
+
     </div>
   );
 }
