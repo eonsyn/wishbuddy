@@ -1,10 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Copy, ArrowLeft, Save } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function DiwaliForm() {
-  const [form, setForm] = useState({ wisher: "", name: "", info: "", type: "", mode: "polite" });
+  const [form, setForm] = useState({
+    wisher: "",
+    name: "",
+    info: "",
+    type: "",
+    mode: "polite",
+  });
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState(null);
@@ -12,10 +17,11 @@ export default function DiwaliForm() {
   const [isEdited, setIsEdited] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  // Handle form input
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  // Handle input changes
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-  // Submit and generate new wish
+  // Generate new wish
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,24 +41,23 @@ export default function DiwaliForm() {
         setResponse(data.message);
         toast.success("Wish generated! 🎇");
         setTimeout(() => setShowResult(true), 50);
-      } else toast.error("Something went wrong! 😭");
-    } catch (error) {
-      console.error(error);
+      } else toast.error("Something went wrong!");
+    } catch {
       toast.error("Server error, try again later.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Copy link
+  // Copy share link
   const handleCopy = async () => {
-    if (!res?.data?._id) return toast.error("No wish to copy! ❌");
+    if (!res?.data?._id) return toast.error("No wish to copy!");
     try {
       const shareUrl = `${window.location.origin}/diwali/${res.data._id}`;
       await navigator.clipboard.writeText(shareUrl);
-      toast.success("Shareable link copied! ");
+      toast.success("Shareable link copied!");
     } catch {
-      toast.error("Failed to copy 😢");
+      toast.error("Failed to copy!");
     }
   };
 
@@ -65,24 +70,29 @@ export default function DiwaliForm() {
     setIsEdited(false);
   };
 
-  // Update wish in DB
+  // Update wish text in DB
   const handleUpdate = async () => {
     if (!res?.data?._id) return toast.error("Wish not found for update!");
     setUpdating(true);
+
     try {
       const putRes = await fetch("/api/ai/diwali", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: res.data._id, updatedWish: response }),
+        body: JSON.stringify({
+          id: res.data._id,
+          updatedWish: response.trim(),
+          ...form,
+        }),
       });
       const data = await putRes.json();
+
       if (data.success) {
         toast.success("Wish updated successfully!");
         setIsEdited(false);
         setRes(data);
-      } else toast.error("Update failed 😢");
-    } catch (err) {
-      console.error(err);
+      } else toast.error("Update failed!");
+    } catch {
       toast.error("Error updating wish!");
     } finally {
       setUpdating(false);
@@ -90,10 +100,14 @@ export default function DiwaliForm() {
   };
 
   const modeHeading =
-    form.mode === "roast" ? " Roast Wish " : form.mode === "polite" ? " Polite Wish" : "Your Wish";
+    form.mode === "roast"
+      ? "Roast Wish 😏"
+      : form.mode === "polite"
+      ? "Polite Wish 🎉"
+      : "Your Wish";
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center   px-6 py-4 md:py-10 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-8 md:py-10 relative">
       <Toaster position="top-center" />
       {/* Header */}
       <div className="text-center mb-10">
@@ -105,11 +119,12 @@ export default function DiwaliForm() {
         </p>
       </div>
 
-      {/* Container */}
+      {/* Main Container */}
       <div className="relative w-full max-w-4xl overflow-hidden">
         <div
-          className={`flex transition-transform duration-700 ${showResult ? "-translate-x-full" : "translate-x-0"
-            }`}
+          className={`flex transition-transform duration-700 ${
+            showResult ? "-translate-x-full" : "translate-x-0"
+          }`}
         >
           {/* --- FORM CARD --- */}
           <div className="w-full flex justify-center md:px-4 flex-shrink-0">
@@ -117,9 +132,12 @@ export default function DiwaliForm() {
               onSubmit={handleSubmit}
               className="md:bg-white/70 md:backdrop-blur-xl md:shadow-xl rounded-2xl md:p-8 w-full md:max-w-2xl md:border border-orange-200 space-y-6"
             >
+              {/* Name Inputs */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-800 font-semibold mb-2">Your Name</label>
+                  <label className="block text-gray-800 font-semibold mb-2">
+                    Your Name
+                  </label>
                   <input
                     type="text"
                     name="wisher"
@@ -131,7 +149,9 @@ export default function DiwaliForm() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-800 font-semibold mb-2">Person’s Name</label>
+                  <label className="block text-gray-800 font-semibold mb-2">
+                    Person’s Name
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -144,10 +164,12 @@ export default function DiwaliForm() {
                 </div>
               </div>
 
-              {/* Relationship and Mode */}
+              {/* Relationship & Mode */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-800 font-semibold mb-2">Relationship</label>
+                  <label className="block text-gray-800 font-semibold mb-2">
+                    Relationship
+                  </label>
                   <select
                     name="type"
                     required
@@ -166,7 +188,9 @@ export default function DiwaliForm() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-800 font-semibold mb-2">Mode</label>
+                  <label className="block text-gray-800 font-semibold mb-2">
+                    Mode
+                  </label>
                   <div className="flex gap-4">
                     {["polite", "roast"].map((m) => (
                       <label key={m} className="flex items-center gap-2">
@@ -185,7 +209,7 @@ export default function DiwaliForm() {
                 </div>
               </div>
 
-              {/* Info */}
+              {/* Info Field */}
               <div>
                 <label className="block text-gray-800 font-semibold mb-2">
                   Something about them
@@ -201,10 +225,11 @@ export default function DiwaliForm() {
                 />
               </div>
 
+              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-transform hover:scale-105 shadow-md flex justify-center items-center gap-2"
+                className="w-full py-3 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-transform hover:scale-105 shadow-md"
               >
                 {loading ? "Generating..." : "Generate Wish"}
               </button>
@@ -220,65 +245,56 @@ export default function DiwaliForm() {
                 <div className="h-4 bg-gray-300 rounded mb-2 w-5/6"></div>
               </div>
             ) : (
-             <div className="bg-white/90 backdrop-blur border border-orange-200 rounded-2xl p-6 shadow-xl w-full md:max-w-2xl relative transition-all duration-300">
-  {/* 🔙 Back Button */}
-  <button
-    onClick={resetForm}
-    className="absolute top-4 left-4 p-3 rounded-full bg-orange-500 text-white hover:bg-orange-600 shadow-md transition-all duration-200"
-  >
-    <ArrowLeft size={18} />
-  </button>
+              <div className="bg-white/90 border border-orange-200 rounded-2xl p-6 shadow-xl w-full md:max-w-2xl relative">
+                <button
+                  onClick={resetForm}
+                  className="absolute top-4 left-4 px-4 py-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition"
+                >
+                  Back
+                </button>
 
-  {/* 🪔 Heading */}
-  <h2 className="text-2xl font-bold text-orange-700 mb-2 text-center tracking-wide">
-    {modeHeading}
-  </h2>
+                <h2 className="text-2xl font-bold text-orange-700 mb-3 text-center">
+                  {modeHeading}
+                </h2>
 
-  <p className="text-sm   text-gray-600 text-center mb-4">
-     This is <strong>AI response</strong>  You can update the wish if needed, save your version, and then share it! 
-  </p>
+                <p className="text-sm text-gray-600 text-center mb-4">
+                  This is an AI response. You can edit and save your version
+                  before sharing.
+                </p>
 
-  {/* 📝 Textarea */}
-  <textarea
-    value={response}
-    onChange={(e) => {
-      setResponse(e.target.value);
-      setIsEdited(true);
-    }}
-    rows={5}
-    placeholder="Write or edit your wish here..."
-    className="w-full p-3 border border-orange-300 rounded-xl text-gray-800 focus:ring-2 focus:ring-orange-400 focus:border-orange-400 resize-none bg-white/70 placeholder:text-gray-400 transition"
-  />
+                <textarea
+                  value={response}
+                  onChange={(e) => {
+                    setResponse(e.target.value);
+                    setIsEdited(true);
+                  }}
+                  rows={5}
+                  className="w-full p-3 border border-orange-300 rounded-xl text-gray-800 focus:ring-2 focus:ring-orange-400 resize-none bg-white/70"
+                />
 
-  {/* ✍️ Wisher Info */}
-  <p className="text-sm text-gray-500 mt-2 text-center italic">
-    — from {form.wisher || "Anonymous"}
-  </p>
+                <p className="text-sm text-gray-500 mt-2 text-center italic">
+                  — from {form.wisher || "Anonymous"}
+                </p>
 
-  {/* 💾 Update Button */}
-  {isEdited && (
-    <button
-      onClick={handleUpdate}
-      disabled={updating}
-      className="mt-4 w-full py-2.5 bg-green-500 hover:bg-green-600 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all duration-200"
-    >
-      <Save size={18} />
-      {updating ? "Updating..." : "Save Updated Wish"}
-    </button>
-  )}
+                {isEdited && (
+                  <button
+                    onClick={handleUpdate}
+                    disabled={updating}
+                    className="mt-4 w-full py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition"
+                  >
+                    {updating ? "Saving..." : "Save Updated Wish"}
+                  </button>
+                )}
 
-  {/* 📋 Copy Button */}
-  <div className="flex justify-center mt-6">
-    <button
-      onClick={handleCopy}
-      className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-medium transition-all duration-200 shadow-sm"
-    >
-      <Copy size={18} />
-      Copy & Share
-    </button>
-  </div>
-</div>
-
+                <div className="flex justify-center mt-6">
+                  <button
+                    onClick={handleCopy}
+                    className="px-5 py-2.5 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-medium transition"
+                  >
+                    Copy & Share
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>

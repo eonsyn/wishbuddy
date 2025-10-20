@@ -145,46 +145,48 @@ export async function GET(req) {
 // ✏️ PUT: Update an existing wish (regenerate or modify fields)
 export async function PUT(req) {
   try {
-    const { id, wisher, name, info, type, mode } = await req.json();
+    const { id, updatedWish, wisher, name, info, type, mode } = await req.json();
 
     if (!id) {
-      return Response.json({ success: false, error: "Wish ID is required for update" }, { status: 400 });
+      return Response.json(
+        { success: false, error: "Wish ID is required for update" },
+        { status: 400 }
+      );
+    }
+
+    if (!updatedWish || updatedWish.trim() === "") {
+      return Response.json(
+        { success: false, error: "Updated wish text cannot be empty" },
+        { status: 400 }
+      );
     }
 
     await connectDB();
 
-    // 🪄 Reuse the same prompt logic
-    let prompt = `
-You are an AI rewriting a Diwali wish in Hinglish for **${name}**, whose relationship is **${type}**.  
-Here’s what you know about them: "${info}".  
-The wish must be **under 3 lines**, and match the "${mode}" tone (roast/polite).  
-Make it fresh, natural, and full of Diwali energy! 🪔✨
-`;
-
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite-preview-09-2025",
-    });
-    const result = await model.generateContent(prompt);
-    const updatedWishText = result.response.text();
-
-    // 🧾 Update the document
-    const updatedWish = await Wish.findByIdAndUpdate(
+    // 🧾 Update the wish text only (no regeneration)
+    const updatedDoc = await Wish.findByIdAndUpdate(
       id,
-      { wisher, name, info, type, mode, generatedWish: updatedWishText },
+      { wisher, name, info, type, mode, generatedWish: updatedWish },
       { new: true }
     );
 
-    if (!updatedWish) {
-      return Response.json({ success: false, error: "Wish not found" }, { status: 404 });
+    if (!updatedDoc) {
+      return Response.json(
+        { success: false, error: "Wish not found" },
+        { status: 404 }
+      );
     }
 
     return Response.json({
       success: true,
       message: "Wish updated successfully!",
-      data: updatedWish,
+      data: updatedDoc,
     });
   } catch (err) {
     console.error("❌ Error updating wish:", err);
-    return Response.json({ success: false, error: err.message }, { status: 500 });
+    return Response.json(
+      { success: false, error: err.message },
+      { status: 500 }
+    );
   }
 }
